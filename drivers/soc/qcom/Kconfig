@@ -953,6 +953,9 @@ config WCD_DSP_GLINK
 	   between MSM and WCD DSP over glink transport protocol. This driver
 	   provides read and write interface via char device.
 
+config STATE_NOTIFIER
+        bool "State Notifier"
+
 config SERIAL_NUM
 	bool "Enable Serial Number Proc Interface"
 	help
