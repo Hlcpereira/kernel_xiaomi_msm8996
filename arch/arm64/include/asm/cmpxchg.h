@@ -145,9 +145,6 @@ static inline unsigned long __cmpxchg(volatile void *ptr, unsigned long old,
 				: "cc");
 		} while (res);
 		break;
-
-	default:
-		BUILD_BUG();
 	}
 
 	return oldval;
