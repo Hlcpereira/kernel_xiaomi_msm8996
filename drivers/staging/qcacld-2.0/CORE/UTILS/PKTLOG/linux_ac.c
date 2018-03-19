@@ -88,9 +88,9 @@ static ssize_t pktlog_read(struct file *file, char *buf, size_t nbytes,
 			   loff_t * ppos);
 
 static struct file_operations pktlog_fops = {
-	open:pktlog_open,
-	release:pktlog_release,
-	read:pktlog_read,
+	.open = pktlog_open,
+	.release = pktlog_release,
+	.read = pktlog_read,
 };
 
 /*
