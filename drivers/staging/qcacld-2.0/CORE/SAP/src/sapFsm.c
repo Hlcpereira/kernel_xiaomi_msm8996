@@ -4069,7 +4069,7 @@ sapFsm
     switch (stateVar)
     {
         case eSAP_DISCONNECTED:
-            if ((msg == eSAP_HDD_START_INFRA_BSS))
+            if (msg == eSAP_HDD_START_INFRA_BSS)
             {
                 /* Transition from eSAP_DISCONNECTED to eSAP_CH_SELECT (both without substates) */
                 VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, new from state %s => %s, session id %d",
@@ -5175,10 +5175,10 @@ static VOS_STATUS sapGetChannelList(ptSapContext sapContext,
 
     /*Search for the Active channels in the given range */
     channelCount = 0;
-    for( loopCount = bandStartChannel; loopCount <= bandEndChannel; loopCount++ )
+    for (loopCount = bandStartChannel; loopCount <= bandEndChannel; loopCount++)
     {
-        if((startChannelNum <= rfChannels[loopCount].channelNum)&&
-            (endChannelNum >= rfChannels[loopCount].channelNum ))
+        if ((startChannelNum <= rfChannels[loopCount].channelNum) &&
+            (endChannelNum >= rfChannels[loopCount].channelNum))
         {
             if (((TRUE == pmac->scan.fEnableDFSChnlScan) &&
                  (regChannels[loopCount].enabled)) ||
@@ -5186,13 +5186,12 @@ static VOS_STATUS sapGetChannelList(ptSapContext sapContext,
                  (NV_CHANNEL_ENABLE == regChannels[loopCount].enabled)))
             {
 #ifdef FEATURE_WLAN_CH_AVOID
-                for( i = 0; i < NUM_20MHZ_RF_CHANNELS; i++ )
+                for (i = 0; i < NUM_20MHZ_RF_CHANNELS; i++)
                 {
-                    if( (safeChannels[i].channelNumber ==
-                                rfChannels[loopCount].channelNum) )
+                    if (safeChannels[i].channelNumber == rfChannels[loopCount].channelNum)
                     {
                         /* Check if channel is safe */
-                        if(VOS_TRUE == safeChannels[i].isSafe)
+                        if (VOS_TRUE == safeChannels[i].isSafe)
                         {
 #endif
 #ifdef FEATURE_WLAN_AP_AP_ACS_OPTIMIZE
