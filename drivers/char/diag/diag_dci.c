@@ -1169,8 +1169,7 @@ void extract_dci_events(unsigned char *buf, int len, int data_source, int token)
 						__func__, len, temp_len);
 				return;
 			}
-			if ((payload_len < (MAX_EVENT_SIZE - 13)) &&
-			((temp_len + timestamp_len + payload_len + 3) <= len)) {
+			if ((temp_len + timestamp_len + payload_len + 3) <= len) {
 				/*
 				 * Copy the payload length and the payload
 				 * after skipping temp_len bytes for already
@@ -1194,8 +1193,7 @@ void extract_dci_events(unsigned char *buf, int len, int data_source, int token)
 			 * for already parsed packet, timestamp_len for
 			 * timestamp buffer, 2 bytes for event_id_packet.
 			 */
-			if ((payload_len < (MAX_EVENT_SIZE - 12)) &&
-			((temp_len + timestamp_len + payload_len + 2) <= len))
+			if ((temp_len + timestamp_len + payload_len + 2) <= len)
 				memcpy(event_data + 12, buf + temp_len + 2 +
 						timestamp_len, payload_len);
 			else {
