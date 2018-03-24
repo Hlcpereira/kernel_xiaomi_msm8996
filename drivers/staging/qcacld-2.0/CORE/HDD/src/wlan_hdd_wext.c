@@ -10743,8 +10743,7 @@ int iw_set_pno(struct net_device *dev, struct iw_request_info *info,
         vos_mem_free(data);
         return -EINVAL;
   }
-  if (pnoRequest.fast_scan_max_cycles < CFG_PNO_SCAN_TIMER_REPEAT_VALUE_MIN ||
-      pnoRequest.fast_scan_max_cycles > CFG_PNO_SCAN_TIMER_REPEAT_VALUE_MAX) {
+  if (pnoRequest.fast_scan_max_cycles < CFG_PNO_SCAN_TIMER_REPEAT_VALUE_MIN) {
       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
                 "invalid fast scan max cycles %hhu",
                  pnoRequest.fast_scan_max_cycles);
