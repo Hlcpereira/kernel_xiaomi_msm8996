@@ -48,6 +48,7 @@
 #include "ol_htt_rx_api.h"
 #include "wlan_qct_tl.h"
 #include <ol_txrx_ctrl_api.h>
+#include "ol_ctrl_api.h"
 /*
  * The target may allocate multiple IDs for a peer.
  * In particular, the target may allocate one ID to represent the
@@ -91,15 +92,6 @@
 struct ol_txrx_pdev_t;
 struct ol_txrx_vdev_t;
 struct ol_txrx_peer_t;
-
-struct ol_pdev_t;
-typedef struct ol_pdev_t* ol_pdev_handle;
-
-struct ol_vdev_t;
-typedef struct ol_vdev_t* ol_vdev_handle;
-
-struct ol_peer_t;
-typedef struct ol_peer_t* ol_peer_handle;
 
 /* rx filter related */
 #define MAX_PRIVACY_FILTERS           4 /* max privacy filters */
