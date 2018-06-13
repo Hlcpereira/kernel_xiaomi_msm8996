@@ -1143,11 +1143,17 @@ void extract_dci_events(unsigned char *buf, int len, int data_source, int token)
 			payload_len_field = 1;
 			payload_len = *(uint8_t *)
 					(buf + temp_len + 2 + timestamp_len);
-			/* copy the payload length and the payload */
-			memcpy(event_data + 12, buf + temp_len + 2 +
-					timestamp_len, 1);
-			memcpy(event_data + 13, buf + temp_len + 2 +
+			if (payload_len < (MAX_EVENT_SIZE - 13)) {
+				/* copy the payload length and the payload */
+				memcpy(event_data + 12, buf + temp_len + 2 +
+							timestamp_len, 1);
+				memcpy(event_data + 13, buf + temp_len + 2 +
 					timestamp_len + 1, payload_len);
+			} else {
+				pr_err("diag: event > %d, payload_len = %d\n",
+					(MAX_EVENT_SIZE - 13), payload_len);
+				return;
+			}
 		} else {
 			payload_len_field = 0;
 			payload_len = (event_id_packet & 0x6000) >> 13;
