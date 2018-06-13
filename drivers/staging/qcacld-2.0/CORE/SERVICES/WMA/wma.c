@@ -2624,6 +2624,8 @@ static void wma_vdev_stats_lost_link_helper(tp_wma_handle wma,
 			 __func__, vdev_stats->vdev_id, bcn_snr, dat_snr);
 		if (bcn_snr != WMA_TGT_INVALID_SNR_OLD)
 			rssi = bcn_snr;
+		else if (dat_snr != WMA_TGT_INVALID_SNR_NEW)
+			rssi = dat_snr;
 		else
 			rssi = WMA_TGT_INVALID_SNR_OLD;
 
