@@ -87,10 +87,10 @@ maple_add_request(struct request_queue *q, struct request *rq)
 	 * Add request to the proper fifo list and set its
 	 * expire time.
 	 */
-	if (!state_suspended && mdata->fifo_expire[sync][dir]) {
+	if (display_on && mdata->fifo_expire[sync][dir]) {
 		rq->fifo_time = jiffies + mdata->fifo_expire[sync][dir];
 		list_add_tail(&rq->queuelist, &mdata->fifo_list[sync][dir]);
-	} else if (state_suspended && fifo_expire_suspended) {
+	} else if (!display_on && fifo_expire_suspended) {
 		rq->fifo_time = jiffies + fifo_expire_suspended;
 		list_add_tail(&rq->queuelist, &mdata->fifo_list[sync][dir]);
 	}
