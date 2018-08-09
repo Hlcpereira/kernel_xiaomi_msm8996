@@ -754,7 +754,8 @@ unsigned int *xt_alloc_entry_offsets(unsigned int size)
 	if (off)
 		return off;
 
-	off = vmalloc(size * sizeof(unsigned int));
+	if (size < (SIZE_MAX / sizeof(unsigned int)))
+		off = vmalloc(size * sizeof(unsigned int));
 
 	return off;
 }

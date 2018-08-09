@@ -1038,7 +1038,9 @@ htt_rx_ind_rssi_dbm(htt_pdev_handle pdev, adf_nbuf_t rx_ind_msg)
     }
 
     rssi = HTT_RX_IND_RSSI_CMB_GET(*msg_word);
-    return rssi;
+    return (HTT_TGT_RSSI_INVALID == rssi) ?
+        HTT_RSSI_INVALID :
+        rssi;
 }
 
 /**
@@ -1074,7 +1076,9 @@ htt_rx_ind_rssi_dbm_chain(htt_pdev_handle pdev, adf_nbuf_t rx_ind_msg,
     msg_word += 1 + chain;
 
     rssi = HTT_RX_IND_RSSI_PRI20_GET(*msg_word);
-    return rssi;
+    return (HTT_TGT_RSSI_INVALID == rssi) ?
+        HTT_RSSI_INVALID :
+        rssi;
 }
 
 /**

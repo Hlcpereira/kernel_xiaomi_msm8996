@@ -176,7 +176,8 @@ ol_txrx_peer_find_by_local_id(
     u_int8_t local_peer_id)
 {
     struct ol_txrx_peer_t *peer;
-    if (local_peer_id >= OL_TXRX_NUM_LOCAL_PEER_IDS) {
+    if ((local_peer_id == OL_TXRX_INVALID_LOCAL_PEER_ID) ||
+        (local_peer_id >= OL_TXRX_NUM_LOCAL_PEER_IDS)) {
         return NULL;
     }
 
