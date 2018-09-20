@@ -2280,6 +2280,43 @@ int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu)
 }
 EXPORT_SYMBOL(cpufreq_get_policy);
 
+#ifdef CONFIG_MACH_XIAOMI_A1
+#define UNDERCLK_MAX_BIGCL 1996800
+static bool no_cpu_underclock;
+
+static int __init get_cpu_underclock(char *unused)
+{
+	no_cpu_underclock = false;
+	return 0;
+}
+__setup("no_underclock", get_cpu_underclock);
+#endif
+
+#ifdef CONFIG_MACH_XIAOMI_A7
+#define UNDERCLK_MAX_BIGCL 1977600
+#define UNDERCLK_MAX_LITTLECL 1593600
+static bool no_cpu_underclock;
+
+static int __init get_cpu_underclock(char *unused)
+{
+        no_cpu_underclock = false;
+        return 0;
+}
+__setup("no_underclock", get_cpu_underclock);
+#endif
+
+#if defined(CONFIG_MACH_XIAOMI_A4) || defined(CONFIG_MACH_XIAOMI_A8) || defined(CONFIG_MACH_XIAOMI_B7)
+#define UNDERCLK_MAX_BIGCL 2150400
+static bool no_cpu_underclock;
+
+static int __init get_cpu_underclock(char *unused)
+{
+        no_cpu_underclock = false;
+        return 0;
+}
+__setup("no_underclock", get_cpu_underclock);
+#endif
+
 /*
  * policy : current policy.
  * new_policy: policy to be set.
@@ -2289,6 +2326,25 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 {
 	struct cpufreq_governor *old_gov;
 	int ret;
+
+#ifdef CONFIG_ARCH_MSM8996
+	if (!no_cpu_underclock){
+		if (new_policy->cpu > 1){
+			if (new_policy->max > UNDERCLK_MAX_BIGCL)
+				new_policy->max = UNDERCLK_MAX_BIGCL;
+		}
+	}
+#endif
+
+#ifdef CONFIG_MACH_XIAOMI_A7
+	if (!no_cpu_underclock){
+                if (new_policy->cpu < 2){
+                        if (new_policy->max > UNDERCLK_MAX_LITTLECL)
+                                new_policy->max = UNDERCLK_MAX_LITTLECL;
+                }
+        }
+
+#endif
 
 	pr_debug("setting new policy for CPU %u: %u - %u kHz\n",
 		 new_policy->cpu, new_policy->min, new_policy->max);
