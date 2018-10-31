@@ -8,4 +8,7 @@ source "drivers/platform/goldfish/Kconfig"
 
 source "drivers/platform/chrome/Kconfig"
 
+if ARCH_MSM
 source "drivers/platform/msm/Kconfig"
+source "drivers/platform/xiaomi/Kconfig"
+endif
