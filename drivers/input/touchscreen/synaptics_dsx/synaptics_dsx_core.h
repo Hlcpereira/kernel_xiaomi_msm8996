@@ -320,7 +320,7 @@ struct synaptics_rmi4_data {
 	struct regulator *lab_reg;
 	struct regulator *ibb_reg;
 	struct regulator *disp_reg;
-	struct regulator *bus_reg;s
+	struct regulator *bus_reg;
 	struct mutex rmi4_reset_mutex;
 	struct mutex rmi4_report_mutex;
 	struct mutex rmi4_io_ctrl_mutex;
