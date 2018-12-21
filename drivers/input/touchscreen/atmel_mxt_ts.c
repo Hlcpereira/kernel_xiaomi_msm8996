@@ -24,6 +24,7 @@
 #include <linux/input/mt.h>
 #include <linux/interrupt.h>
 #include <linux/slab.h>
+#include <linux/pinctrl/consumer.h>
 #include <linux/regulator/consumer.h>
 #include <linux/gpio.h>
 #include <linux/string.h>
