@@ -43,6 +43,7 @@
 #include <linux/nls.h>
 #include <linux/of.h>
 #include <linux/blkdev.h>
+#include <linux/pinctrl/consumer.h>
 
 #include "ufshcd.h"
 #include "ufshci.h"
