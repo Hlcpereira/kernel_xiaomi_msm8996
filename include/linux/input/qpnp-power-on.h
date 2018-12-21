@@ -78,7 +78,7 @@ int qpnp_pon_is_lpk(void);
 int qpnp_pon_is_ps_hold_reset(void);
 
 #else
-static int qpnp_pon_system_pwr_off(enum pon_power_off_type type)
+static int __maybe_unused qpnp_pon_system_pwr_off(enum pon_power_off_type type)
 {
 	return -ENODEV;
 }
