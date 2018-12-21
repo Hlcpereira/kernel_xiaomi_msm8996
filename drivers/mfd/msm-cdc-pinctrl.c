@@ -17,6 +17,7 @@
 #include <linux/of.h>
 #include <linux/of_device.h>
 #include <linux/platform_device.h>
+#include <linux/pinctrl/consumer.h>
 #include <linux/gpio.h>
 #include <linux/of_gpio.h>
 #include <linux/mfd/msm-cdc-pinctrl.h>
