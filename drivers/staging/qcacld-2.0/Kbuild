@@ -57,6 +57,7 @@ ifeq ($(KERNEL_BUILD), 0)
 	ifeq ($(CONFIG_ARCH_MSM8909), y)
 		ifeq ($(CONFIG_ROME_IF), sdio)
 			CONFIG_WLAN_SYNC_TSF_PLUS := y
+			CONFIG_FEATURE_COEX_PTA_CONFIG_ENABLE := y
 		endif
 	endif
 
@@ -191,7 +192,7 @@ endif
 # Feature flags which are not (currently) configurable via Kconfig
 
 #Whether to build debug version
-BUILD_DEBUG_VERSION := 0
+BUILD_DEBUG_VERSION := 1
 
 #Enable this flag to build driver in diag version
 BUILD_DIAG_VERSION := 1
@@ -347,7 +348,7 @@ CONFIG_FEATURE_STATS_EXT := 1
 CONFIG_STATICALLY_ADD_11P_CHANNELS := n
 
 #Enable thermal shutdown
-CONFIG_WLAN_THERMAL_SHUTDOWN := 0
+CONFIG_WLAN_THERMAL_SHUTDOWN := 1
 
 #Enable the Disable Channel Switch
 CONFIG_WLAN_DISABLE_CHANNEL_SWITCH := 1
@@ -1007,8 +1008,6 @@ endif
 
 EXTRA_CFLAGS += $(INCS)
 
-EXTRA_CFLAGS += -Wno-unused-function -Wno-unused-variable
-
 CDEFINES :=	-DANI_LITTLE_BYTE_ENDIAN \
 		-DANI_LITTLE_BIT_ENDIAN \
 		-DQC_WLAN_CHIPSET_QCA_CLD \
@@ -1380,6 +1379,9 @@ CDEFINES += -DDEBUG_HL_LOGGING
 ifeq ($(CONFIG_QOS_FWD_SUPPORT), y)
 CDEFINES += -DQOS_FWD_SUPPORT
 endif
+ifeq ($(CONFIG_USB_WARM_RESET), y)
+CDEFINES += -DFEATURE_USB_WARM_RESET
+endif
 endif
 
 #Enable FW logs through ini
@@ -1653,6 +1655,7 @@ CDEFINES += -DACS_FW_REPORT_PARAM
 CDEFINES += -DFEATURE_WLAN_SUB_20_MHZ
 CDEFINES += -DMAC_NOTIFICATION_FEATURE
 CDEFINES += -DCHANNEL_HOPPING_ALL_BANDS
+CDEFINES += -DHDD_IPA_RX_SOFTIRQ_THRESH
 endif
 
 ifeq ($(CONFIG_ARCH_MSM8937), y)
@@ -1695,6 +1698,12 @@ ifeq ($(CONFIG_WLAN_WOW_PULSE), y)
 CDEFINES += -DWLAN_FEATURE_WOW_PULSE
 endif
 
+#Enable Pattern Bitmap Match & Magic Pattern WOW
+ifeq ($(CONFIG_PBM_MAGIC_WOW), y)
+CDEFINES += -DWLAN_FEATURE_WOW_PULSE
+CDEFINES += -DFEATURE_PBM_MAGIC_WOW
+endif
+
 ifeq ($(CONFIG_WLAN_FEATURE_NAN_DATAPATH),y)
 CDEFINES += -DWLAN_FEATURE_NAN_DATAPATH
 endif
@@ -1721,6 +1730,14 @@ CDEFINES += -DWLAN_WAPI_MODE_11AC_DISABLE
 endif
 
 KBUILD_CPPFLAGS += $(CDEFINES)
+
+# Currently, for versions of gcc which support it, the kernel Makefile
+# is disabling the maybe-uninitialized warning.  Re-enable it for the
+# WLAN driver.  Note that we must use EXTRA_CFLAGS here so that it
+# will override the kernel settings.
+ifeq ($(call cc-option-yn, -Wmaybe-uninitialized),y)
+EXTRA_CFLAGS += -Wmaybe-uninitialized
+endif
 
 ifeq ($(call cc-option-yn, -Wheader-guard),y)
 EXTRA_CFLAGS += -Wheader-guard
