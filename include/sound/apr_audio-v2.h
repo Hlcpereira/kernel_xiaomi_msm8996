@@ -11784,11 +11784,6 @@ struct admx_sec_primary_mic_ch {
 	uint16_t reserved1;
 } __packed;
 
-/*
-* ID of the DTMF Detection  module.
-*/
-#define AUDPROC_MODULE_ID_DTMF_DETECTION        0x00010940
-
 struct adm_set_sec_primary_ch_params {
 	struct adm_cmd_set_pp_params_v5 params;
 	struct adm_param_data_v5 data;
