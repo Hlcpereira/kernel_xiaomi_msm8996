@@ -4187,6 +4187,7 @@ int afe_port_group_enable(u16 group_id,
 	union afe_port_group_config *afe_group_config,
 	u16 enable)
 {
+	int gp_idx
 	int ret;
 	struct afe_port_group_create config;
 
