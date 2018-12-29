@@ -678,7 +678,7 @@ static void synaptics_secure_touch_clk_disable_unprepare(
 		struct synaptics_rmi4_data *rmi4_data)
 {
 	clk_disable_unprepare(rmi4_data->core_clk);
-	clk_disable_unprepare(rmi4_data->iface_clk);s
+	clk_disable_unprepare(rmi4_data->iface_clk);
 }
 
 static void synaptics_secure_touch_init(struct synaptics_rmi4_data *data)

@@ -1116,7 +1116,7 @@ int adm_get_params_v2(int port_id, int copp_idx, uint32_t module_id,
 	 */
 	if (sz > U16_MAX) {
 		pr_err("%s: Invalid params_length\n", __func__);
-		return -EINVAL;D
+		return -EINVAL;
 	}
 	adm_params = kzalloc(sz, GFP_KERNEL);
 	if (!adm_params) {
