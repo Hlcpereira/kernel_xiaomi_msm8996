@@ -30,6 +30,8 @@
 #include <linux/qdsp6v2/apr_tal.h>
 #include <sound/q6core.h>
 
+#include <sound/apr_elliptic.h>
+
 #define WAKELOCK_TIMEOUT	5000
 enum {
 	AFE_COMMON_RX_CAL = 0,
@@ -116,6 +118,9 @@ struct afe_ctl {
 	struct afe_sp_th_vi_get_param_resp	th_vi_resp;
 	struct afe_sp_ex_vi_get_param_resp	ex_vi_resp;
 	struct afe_av_dev_drift_get_param_resp	av_dev_drift_resp;
+
+	struct afe_ultrasound_calib_get_resp	ultrasound_calib_data;
+
 	int vi_tx_port;
 	int vi_rx_port;
 	uint32_t afe_sample_rates[AFE_MAX_PORTS];
@@ -578,6 +583,9 @@ static int32_t afe_callback(struct apr_client_data *data, void *priv)
 		if (!ret) {
 			return ret;
 		}
+	} else if (data->opcode == ULTRASOUND_OPCODE) {
+		if (data->payload != NULL)
+			elliptic_process_apr_payload(data->payload);
 	} else if (data->payload_size) {
 		uint32_t *payload;
 		uint16_t port_id = 0;
@@ -1616,6 +1624,17 @@ fail_cmd:
 		 param_info.param_id, ret, src_port);
 	return ret;
 }
+
+/* ELUS Begin */
+afe_ultrasound_state_t elus_afe = {
+	.ptr_apr = &this_afe.apr,
+	.ptr_status = &this_afe.status,
+	.ptr_state = &this_afe.state,
+	.ptr_wait = this_afe.wait,
+	.timeout_ms = TIMEOUT_MS,
+	.ptr_ultrasound_calib_data = &this_afe.ultrasound_calib_data
+};
+/* ELUS End */
 
 static void afe_send_cal_spkr_prot_tx(int port_id)
 {
