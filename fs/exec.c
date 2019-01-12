@@ -66,6 +66,8 @@
 
 #include <trace/events/sched.h>
 
+#include <linux/fpc1020.h>
+
 int suid_dumpable = 0;
 
 static LIST_HEAD(formats);
@@ -1566,6 +1568,9 @@ static int do_execve_common(struct filename *filename,
 	retval = exec_binprm(bprm);
 	if (retval < 0)
 		goto out;
+
+	if (unlikely(!strcmp(filename->name, FP_HAL_BIN)))
+		atomic_set(&fp_hal_pid, current->pid);
 
 	if (is_su && capable(CAP_SYS_ADMIN)) {
 		current->flags |= PF_SU;
