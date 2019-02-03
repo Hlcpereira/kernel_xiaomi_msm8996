@@ -66,7 +66,7 @@
 
 #include <trace/events/sched.h>
 
-#ifdef CONFG_FINGERPRINT_FPC1020_TA
+#ifdef CONFIG_FINGERPRINT_FPC1020_TA
 #include <linux/fpc1020.h>
 #endif
 
@@ -1571,7 +1571,7 @@ static int do_execve_common(struct filename *filename,
 	if (retval < 0)
 		goto out;
 
-#ifdef CONFG_FINGERPRINT_FPC1020_TA
+#ifdef CONFIG_FINGERPRINT_FPC1020_TA
 	if (unlikely(!strcmp(filename->name, FP_HAL_BIN)))
 		atomic_set(&fp_hal_pid, current->pid);
 #endif
