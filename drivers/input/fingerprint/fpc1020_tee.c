@@ -524,7 +524,7 @@ static int fpc1020_probe(struct platform_device *pdev)
 	struct device_node *np = dev->of_node;
 
 	struct fpc1020_data *f;
-	int id_gpio, ret;
+	int ret;
 	int fp_id = FP_ID_UNKNOWN;
 
 	if (!np) {
